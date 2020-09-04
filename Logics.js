@@ -21,4 +21,8 @@ Success / Fail(Client) / Error(Server)
 	Always use async code inside callbacks(Non blocking)
 
 	JSON.parse() => JS object to string
+
+#54 Handling PATCH Requests
+
+	Only send the data, which has to be updated. In PUT, we send the entire object 
 */
