@@ -25,4 +25,22 @@ Success / Fail(Client) / Error(Server)
 #54 Handling PATCH Requests
 
 	Only send the data, which has to be updated. In PUT, we send the entire object 
+
+#58 Middleware & The Request Response Cycle: 
+
+	Middleware: Function that is called in between or receiving the request and sending the response.
+	* We can say that in Express, everything is a middleware(Even routers)
+		eg. express.json => body parser
+	* The req and res objects go through each middleware, step by step.
+	* We can think of it, like a pipeline.(Actually it is middleware stack)
+	* The entire process of receiving an incoming request, going through all the middlewares and then sending the
+	response back to the client is called, the request response cycle.
+
+#59 Creating Our Own Middleware 
+	If use app.use() => It will be tied to each and every request
+	We need to call the next inside, because otherwise, the request response cycle will be stuck at that point.
+	res.send() => Will end the req res cycle. Any middlewares after it, will be ignored.	
+
+#60 Using 3rd Party Middleware
+	Eg. Morgan => Logging the API
 */

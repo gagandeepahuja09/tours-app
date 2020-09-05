@@ -1,9 +1,11 @@
 const express = require('express')
+const morgan = require('morgan')
 const fs = require('fs')
-const e = require('express')
 
 const app = express()
+
 app.use(express.json())
+app.use(morgan('dev'))
 
 const port = 4199
 
@@ -23,11 +25,13 @@ const getTour = (req, res) => {
         if (!tour) {
             return res.status(404).json({
                 status: 'failed',
+                requestedAt: req.requestTime,
                 message: 'No tour found with the give id'
             })    
         }
     res.status(200).json({
         status: 'success',
+        requestedAt: req.requestTime,
         tour
     })
 }
@@ -84,6 +88,12 @@ app
     .get(getAllTours)
     .post(createTour)
 
+    app.use((req, res, next) => {
+        req.requestTime = new Date().toISOString()
+        console.log('YO MAN, THis IS the MiddleWAREEE')
+        next()
+    })    
+
 app
     .route('/api/v1/tours/:id')
     .get(getTour)
@@ -91,6 +101,6 @@ app
     .delete(deleteTour)    
     
 app.listen(port, () => {
-    console.log('Running on port')
+    console.log('Running on port', port)
 })
 
