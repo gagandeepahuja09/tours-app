@@ -83,6 +83,41 @@ const deleteTour = (req, res) => {
     })
 }
 
+const getAllUsers = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        message: 'This route is not yet implemented'
+    })
+}
+
+const getUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        message: 'This route is not yet implemented'
+    })
+}
+
+const createUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        message: 'This route is not yet implemented'
+    })
+}
+
+const updateUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        message: 'This route is not yet implemented'
+    })
+}
+
+const deleteUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        message: 'This route is not yet implemented'
+    })
+}
+
 app
     .route('/api/v1/tours')
     .get(getAllTours)
@@ -98,7 +133,25 @@ app
     .route('/api/v1/tours/:id')
     .get(getTour)
     .patch(updateTour)
-    .delete(deleteTour)    
+    .delete(deleteTour)
+    
+
+    app
+    .route('/api/v1/tours')
+    .get(getAllUsers)
+    .post(createUser)
+
+    app.use((req, res, next) => {
+        req.requestTime = new Date().toISOString()
+        console.log('YO MAN, THis IS the MiddleWAREEE')
+        next()
+    })    
+
+app
+    .route('/api/v1/tours/:id')
+    .get(getUser)
+    .patch(updateUser)
+    .delete(deleteUser)   
     
 app.listen(port, () => {
     console.log('Running on port', port)
