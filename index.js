@@ -11,6 +11,8 @@ const port = 4199
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
 
+// ROUTE HANDLERS
+
 const getAllTours = (req, res) => {
     res.status(200).json({
         status: 'success',
@@ -118,37 +120,39 @@ const deleteUser = (req, res) => {
     })
 }
 
-app
-    .route('/api/v1/tours')
+// ROUTES
+
+// Mounting the router
+const tourRouter = express.Router()
+const userRouter = express.Router()
+
+app.use('/api/v1/tours', tourRouter)
+app.use('/api/v1/users', userRouter)
+
+tourRouter
+    .route('/')
     .get(getAllTours)
-    .post(createTour)
+    .post(createTour)  
 
-    app.use((req, res, next) => {
-        req.requestTime = new Date().toISOString()
-        console.log('YO MAN, THis IS the MiddleWAREEE')
-        next()
-    })    
-
-app
-    .route('/api/v1/tours/:id')
+tourRouter
+    .route('/:id')
     .get(getTour)
     .patch(updateTour)
     .delete(deleteTour)
     
+app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString()
+    console.log('YO MAN, THis IS the MiddleWAREEE')
+    next()
+})     
 
-    app
-    .route('/api/v1/tours')
+userRouter
+    .route('/')
     .get(getAllUsers)
-    .post(createUser)
+    .post(createUser)   
 
-    app.use((req, res, next) => {
-        req.requestTime = new Date().toISOString()
-        console.log('YO MAN, THis IS the MiddleWAREEE')
-        next()
-    })    
-
-app
-    .route('/api/v1/tours/:id')
+userRouter
+    .route('/:id')
     .get(getUser)
     .patch(updateUser)
     .delete(deleteUser)   
