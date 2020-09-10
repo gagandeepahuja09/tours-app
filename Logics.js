@@ -45,5 +45,11 @@ Success / Fail(Client) / Error(Server)
 	Eg. Morgan => Logging the API
 
 #62 Creating And Mounting Multiple Routers
-	
+
+#64 Param Middlewares
+	* Middleware stack order depends on the order in which the code is written.
+	* return statement ends the request-response cycle.
+	* next() helps to move to next element in the middleware stack.
+	* Use-case: When we want a combination of similar routes to go through a middleware. eg. a validator to 
+	check if the given id is valid.
 */

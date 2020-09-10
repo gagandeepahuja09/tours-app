@@ -1,6 +1,20 @@
 const fs = require('fs')
+const { route } = require('../routes/tourRoutes')
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
+
+exports.checkID = (req, res, next, val) => {
+    const id = Number(req.params.id)
+    const tour = tours.find(el => el.id === id)
+    if (!tour) {
+        return res.status(404).json({
+            status: 'failed',
+            requestedAt: req.requestTime,
+            message: 'No tour found with the give id'
+        })    
+    }
+    next()
+}
 
 exports.getAllTours = (req, res) => {
     res.status(200).json({
@@ -13,13 +27,6 @@ exports.getAllTours = (req, res) => {
 exports.getTour = (req, res) => {
     const id = Number(req.params.id)
     const tour = tours.find(el => el.id === id)
-    if (!tour) {
-        return res.status(404).json({
-            status: 'failed',
-            requestedAt: req.requestTime,
-            message: 'No tour found with the give id'
-        })    
-    }
     res.status(200).json({
         status: 'success',
         requestedAt: req.requestTime,
@@ -45,14 +52,6 @@ exports.createTour = (req, res) => {
 }
 
 exports.updateTour = (req, res) => {
-    const id = Number(req.params.id)
-    const tour = tours.find(el => el.id === id)
-    if (!tour) {
-        return res.status(404).json({
-            status: 'failed',
-            message: 'No tour found with the give id'
-        })    
-    }
     res.status(200).json({
         status: 'success',
         tour
@@ -60,14 +59,6 @@ exports.updateTour = (req, res) => {
 }
 
 exports.deleteTour = (req, res) => {
-    const id = Number(req.params.id)
-    const tour = tours.find(el => el.id === id)
-    if (!tour) {
-        return res.status(404).json({
-            status: 'failed',
-            message: 'No tour found with the give id'
-        })    
-    }
     res.status(204).json({
         status: 'success',
         data: null
