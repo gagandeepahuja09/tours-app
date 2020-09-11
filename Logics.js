@@ -83,4 +83,14 @@ Success / Fail(Client) / Error(Server)
 
 #74 CRUD: Creating Documents
 	* db.tours.insertMany([{}, {}])
+
+#75 CRUD: Querying(Reading) Documents
+	* db.tours.insertMany([{}, {}])
+	* db.tours.find({ class: "below-avg" })
+	* AND Condition: db.tours.find({ price: { $lte: 200 }, rating: { $gt: 4 } })		
+	* OR Condition(Can be used more often): db.tours.find({ $or: [{ price: { $lte: 200 } }, { rating: { $gt: 4.5 } }] })
+	* Choosing specific attributes: In the second parameter of find
+	
+#76: CRUD: Updating Documents
+	* db.tours.updateMany({ price: { $gt:300 }, rating: { $gte: 4.5 }  }, { $set: { premium: true } })
 */
