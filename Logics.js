@@ -90,7 +90,28 @@ Success / Fail(Client) / Error(Server)
 	* AND Condition: db.tours.find({ price: { $lte: 200 }, rating: { $gt: 4 } })		
 	* OR Condition(Can be used more often): db.tours.find({ $or: [{ price: { $lte: 200 } }, { rating: { $gt: 4.5 } }] })
 	* Choosing specific attributes: In the second parameter of find
+			db.tours.find({ $or: [{ price: { $lte: 200 } }, { rating: { $gt: 4.5 } }] }, { name: 1, rating: 2 })
 	
 #76: CRUD: Updating Documents
 	* db.tours.updateMany({ price: { $gt:300 }, rating: { $gte: 4.5 }  }, { $set: { premium: true } })
+
+#77 CRUD: Deleting Documents
+	* db.tours.deleteMany({ }) => condn just like find
+#78 Compass GUI for Mongo
+#79 Hosted DB With Atlas
+#80 Connecting To Our Hosted DB
+#82 Connecting Our DB With The Express App
+	Cluster: An instance of a database
+	* Using mongoose.connect() and specifying DB in .env file.
+#83 What is Mongoose
+	* Mongoose is an ODM(Object Data Modelling) library for MongoDB and Node.js.
+	* It is a layer of abstraction over MongoDB, just like Express is for Node.js.
+	* We can write JS code, which will then interact with the database.
+	* Features:
+		* Schemas to model data & relationships.
+		* Easy data validation
+		* Simple Query API
+		* Middlewares
+	* Mongoose Schema: Where we model our data: by providing structure of data, default values and validation.
+	* Mongoose Model: A wrapper for the schema, providing an interface to the database for CRUD operations.
 */
