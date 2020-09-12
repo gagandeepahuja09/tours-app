@@ -127,4 +127,7 @@ Success / Fail(Client) / Error(Server)
 			* Ensuring only users who bought the tour can review it.
 	Controller  --> Application Logic
 		* Concerned about request and response
+#88 Creating Documents
+	const newTour = await Tour.create(req.body)
+	async-await: Should definitely use try-catch
 */
