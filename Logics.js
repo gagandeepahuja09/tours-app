@@ -114,4 +114,7 @@ Success / Fail(Client) / Error(Server)
 		* Middlewares
 	* Mongoose Schema: Where we model our data: by providing structure of data, default values and validation.
 	* Mongoose Model: A wrapper for the schema, providing an interface to the database for CRUD operations.
+	* Schema is like a structure, and model like a class. 
+
+#84 Creating a Simple Tour Model	
 */
