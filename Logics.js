@@ -117,4 +117,14 @@ Success / Fail(Client) / Error(Server)
 	* Schema is like a structure, and model like a class. 
 
 #84 Creating a Simple Tour Model	
+#86 MVC Architecture
+	Model --> Business Logic
+		* Concerned about the business problem, we are actually trying to solve.
+		* Directly related to business rules, how the business works.
+		eg: * Creating new tours in DB
+			* Checking user pwd.
+			* Validating user input.
+			* Ensuring only users who bought the tour can review it.
+	Controller  --> Application Logic
+		* Concerned about request and response
 */
