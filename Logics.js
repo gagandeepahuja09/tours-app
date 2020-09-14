@@ -130,4 +130,8 @@ Success / Fail(Client) / Error(Server)
 #88 Creating Documents
 	const newTour = await Tour.create(req.body)
 	async-await: Should definitely use try-catch
+#94 Making The API Better: Filtering
+	const queryObj = req.query
+	* We cannot directly use queryObj like this because it will be a hard copy.
+	* Shallow copy => const queryObj = { ...req.query }
 */

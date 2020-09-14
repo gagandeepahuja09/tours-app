@@ -12,7 +12,7 @@ const tourSchema = new mongoose.Schema({
     },
     duration: {
         type: Number,
-        required: [true, 'A tour must have a group size']
+        required: [true, 'A tour must have a duration']
     },
     maxGroupSize: {
         type: Number,
