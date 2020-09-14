@@ -10,7 +10,14 @@ exports.getAllTours = async (req, res) => {
         // \b => exact matches, /g => only fully
         queryStr = queryStr.replace(/\b{gte|gt|lt|lte}\b/g, match => `$${match}`)
         console.log(queryStr)
-        const query = Tour.find(JSON.parse(queryStr))
+        let query = Tour.find(JSON.parse(queryStr))
+        if(req.query.sort) {
+            const sortBy = req.query.sort.split(',').join(' ')
+            query = query.sort(sortBy)
+            // 'price -ratingsAverage -ratingsQuantity
+        } else {
+            query = query.sort('-createdAt')
+        }
         const tours = await query
         res.status(200).json({
             status: 'success',

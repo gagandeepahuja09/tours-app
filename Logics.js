@@ -117,6 +117,7 @@ Success / Fail(Client) / Error(Server)
 	* Schema is like a structure, and model like a class. 
 
 #84 Creating a Simple Tour Model	
+
 #86 MVC Architecture
 	Model --> Business Logic
 		* Concerned about the business problem, we are actually trying to solve.
@@ -127,11 +128,21 @@ Success / Fail(Client) / Error(Server)
 			* Ensuring only users who bought the tour can review it.
 	Controller  --> Application Logic
 		* Concerned about request and response
+
 #88 Creating Documents
 	const newTour = await Tour.create(req.body)
 	async-await: Should definitely use try-catch
+
 #94 Making The API Better: Filtering
 	const queryObj = req.query
 	* We cannot directly use queryObj like this because it will be a hard copy.
 	* Shallow copy => const queryObj = { ...req.query }
+
+#96 Making The API Better: Sorting
+	let query = tour.find(queryObj)
+	* We keep this in a variable, so that we can chain it later.
+	* query = query.sort(req.query.sort)
+	* Sorting in Descending Order --> ?sort=-price --> Mongo will sort this in descending order.
+	* http://localhost:4199/api/V1/tours?sort=price,-ratingsAverage, -ratingsQuantity
+	* query.sort(price ratingsAverage ratingsQuantity)
 */
