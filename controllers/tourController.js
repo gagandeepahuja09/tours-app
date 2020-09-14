@@ -5,13 +5,13 @@ exports.getAllTours = async (req, res) => {
         const queryObj = { ...req.query }
         const excludedFields = ['page', 'fields', 'limit', 'sort']
         excludedFields.forEach(ele => delete queryObj[ele])
-        const tours = await Tour.find(queryObj)
-        // Method 2
-        // const tours = await Tour.find()
-        //     .where('duration')
-        //     .equals()
-        //     .where()
-        //     .lte()
+
+        let queryStr = JSON.stringify(queryObj)
+        // \b => exact matches, /g => only fully
+        queryStr = queryStr.replace(/\b{gte|gt|lt|lte}\b/g, match => `$${match}`)
+        console.log(queryStr)
+        const query = Tour.find(JSON.parse(queryStr))
+        const tours = await query
         res.status(200).json({
             status: 'success',
             results: tours.length,
