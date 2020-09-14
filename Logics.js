@@ -145,4 +145,9 @@ Success / Fail(Client) / Error(Server)
 	* Sorting in Descending Order --> ?sort=-price --> Mongo will sort this in descending order.
 	* http://localhost:4199/api/V1/tours?sort=price,-ratingsAverage, -ratingsQuantity
 	* query.sort(price ratingsAverage ratingsQuantity)
+
+#97 Making The API Better: Limiting Fields	
+	* Hiding properties in schema => set select as false in properties.
+	* Selecing(Projection): query.select('name') 
+	* Excluding properties: query.select('-age')
 */
