@@ -2,15 +2,19 @@ const Tour = require('../models/tourModel')
 
 exports.getAllTours = async (req, res) => {
     try {
+        // 1A. Filtering
         const queryObj = { ...req.query }
         const excludedFields = ['page', 'fields', 'limit', 'sort']
         excludedFields.forEach(ele => delete queryObj[ele])
 
         let queryStr = JSON.stringify(queryObj)
+        // 1B. Advanced Filtering
         // \b => exact matches, /g => only fully
         queryStr = queryStr.replace(/\b{gte|gt|lt|lte}\b/g, match => `$${match}`)
         console.log(queryStr)
         let query = Tour.find(JSON.parse(queryStr))
+
+        // 2. Sorting Result
         if(req.query.sort) {
             const sortBy = req.query.sort.split(',').join(' ')
             query = query.sort(sortBy)
@@ -18,12 +22,29 @@ exports.getAllTours = async (req, res) => {
         } else {
             query = query.sort('-createdAt')
         }
+
+        // 3. Seleting specific fields(Projection)
         if(req.query.fields) {
             const fields = req.query.fields.split(',').join(' ')
             query = query.select(fields)
         } else {
             query = query.select('-__v')
         }
+
+        // 4. Implementing Pagination
+        const page = req.query.page * 1 || 1
+        const limit = req.query.limit * 1 || 25
+        const skip = (page - 1) * limit
+
+        query = query.skip(skip).limit(limit)
+
+        if (req.query.page) {
+            const numTours = await Tour.countDocuments()
+            if(skip >= numTours) {
+                throw new Error('This page does not exist')
+            }
+        } 
+
         const tours = await query
         res.status(200).json({
             status: 'success',

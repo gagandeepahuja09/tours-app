@@ -150,4 +150,8 @@ Success / Fail(Client) / Error(Server)
 	* Hiding properties in schema => set select as false in properties.
 	* Selecing(Projection): query.select('name') 
 	* Excluding properties: query.select('-age')
+
+#98 Making The API Better: Pagination
+	* We can use skip and limit in MongoDB to implement pagination.
+	* If skip size > number of documents: throw an error => it will go to catch block.
 */
