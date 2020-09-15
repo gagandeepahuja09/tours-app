@@ -156,4 +156,8 @@ Success / Fail(Client) / Error(Server)
 	* If skip size > number of documents: throw an error => it will go to catch block.
 
 #99 Making The API Better: Aliasing
+	* Chaining a middleware by specifying the request query 
+
+# 100 Refactoring API Features By Creating A Class
+	* Adding a class in utils folder with all these features
 */
