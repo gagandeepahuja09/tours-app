@@ -154,4 +154,6 @@ Success / Fail(Client) / Error(Server)
 #98 Making The API Better: Pagination
 	* We can use skip and limit in MongoDB to implement pagination.
 	* If skip size > number of documents: throw an error => it will go to catch block.
+
+#99 Making The API Better: Aliasing
 */
