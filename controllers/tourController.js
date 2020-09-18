@@ -95,3 +95,46 @@ exports.deleteTour = async (req, res) => {
         })
     }
 }
+
+exports.tourStats = async (req, res) => {
+    try {
+        console.log('Reached here')
+        const stats = await Tour.aggregate([
+            // Match is like Where clause
+            {
+                $match: { ratingsAverage: { $gte: 4.5 } }
+            }, 
+            {
+                $group: {
+                    _id: { $toUpper: '$difficulty' },  // this is like group by(if we don't want to group by anything, then set is a null)
+                    numTours: { $sum: 1 },
+                    numRatings: { $sum: '$ratingsQuantity' },
+                    avgRating: { $avg: '$ratingsAverage' },
+                    avgPrice: { $avg: '$price' },
+                    minPrice: { $min: '$price' },
+                    maxPrice: { $max: '$price' },
+                }
+            },
+            {
+                $sort: { avgPrice: 1 } // This is like order by(1 => Ascending order)
+                // This will apply sort on the group    
+            },
+            // Add another where clause(match), this will be on the group formed
+            // {
+            //     $match: { _id: { $ne: 'EASY' } }
+            // }
+        ])
+        console.log('stats', stats)
+        res.status(200).json({
+            status: 'success',
+            data: {
+                stats
+            }
+        })
+    } catch(err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err
+        })
+    }
+}
