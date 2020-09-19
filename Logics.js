@@ -162,4 +162,13 @@ Success / Fail(Client) / Error(Server)
 	* Adding a class in utils folder with all these features
 
 #101 Aggregation Pipeline
+
+#104 Virtual Properties: Used mostly with conversions possible from one form to another(one property can be calculated 
+	from a given property).
+
+
+#105 Document Middleware: Mongoose Middleware: Pre or post hooks: Allow an event to occur, before or after a 
+	certain event like saving a document to the database.
+	4 Types Of Middlewares:
+		1) Document	2) Query 3) Aggregate 4) Model middleware
 */

@@ -1,4 +1,7 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify')
+
+const { tourStats } = require('../controllers/tourController')
 
 const tourSchema = new mongoose.Schema({
     name: {
@@ -6,6 +9,7 @@ const tourSchema = new mongoose.Schema({
         required: [true, 'A tour must have a name'],
         unique: true
     }, 
+    slug: String,
     rating: {
         type: Number,
         default: 3.5
@@ -51,7 +55,27 @@ const tourSchema = new mongoose.Schema({
         default: Date.now()
     },
     startDates: [Date]
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 })
+
+tourSchema.virtual('durationWeeks').get(function() {
+    // we are using normal function instead of arrow function, because arrow function does not have
+    // access to this keyword --> this here stores the reference to the document.
+    return this.duration / 7
+})
+
+// Document Middleware: Runs before .create() and .save()
+tourSchema.pre('save', function(next) {
+    this.slug = slugify(this.name, { lower: true })
+    next()
+})
+
+// tourSchema.post('save', function(doc, next) {
+//     console.log(doc)
+//     next()
+// })
 
 const Tour = mongoose.model('Tour', tourSchema)
 
