@@ -10,6 +10,10 @@ router
     .get(tourController.aliasTopTours, tourController.getAllTours)
 
 router
+    .route('/monthly-plan/:year')
+    .get(tourController.getMonthlyPlan)    
+
+router
     .route('/tour-stats')
     .get(tourController.tourStats)
 
@@ -22,6 +26,6 @@ router
     .route('/:id')
     .get(tourController.getTour)
     .patch(tourController.updateTour)
-    .delete(tourController.deleteTour)
+    .delete(tourController.deleteTour)    
 
 module.exports = router
