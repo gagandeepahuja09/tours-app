@@ -54,6 +54,10 @@ const tourSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
+    secretTour: {
+        type: Boolean,
+        default: false
+    },
     startDates: [Date]
 }, {
     toJSON: { virtuals: true },
@@ -69,6 +73,15 @@ tourSchema.virtual('durationWeeks').get(function() {
 // Document Middleware: Runs before .create() and .save()
 tourSchema.pre('save', function(next) {
     this.slug = slugify(this.name, { lower: true })
+    next()
+})
+
+// Query Middleware: Executed before a query await ----.find() => await is the step at which we execute 
+// the query, so this will happen before it. 
+// For all queries, we only want to show tours which are not secret
+tourSchema.pre(/^find/, function(next) {
+//  tourSchema.pre('find', function(next) {
+    this.find({ secretTour: { $ne: true } })
     next()
 })
 
