@@ -193,4 +193,7 @@ Success / Fail(Client) / Error(Server)
 #113 Implementing A Global Error Handling Middleware: 
 	If we use 4 parameters --> (err, req, res, next) then express automatically knows that it is an error
 	handling middleware
+
+	* next(err) --> Express assumes that whenever we pass something into the next function, then it is an error.
+	* it will skip all the middlewares and directly go to the error catching middleware
 */
