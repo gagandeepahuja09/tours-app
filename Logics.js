@@ -174,4 +174,23 @@ Success / Fail(Client) / Error(Server)
 
 #111 Handling Unhandled Routes: If we place it at the end of all routes, then none of the handled routes, 
 	will reach here beacause it will be already handled by the existing routes.
+
+#112 Error Handling In Express: Overview
+	Two Types Of Errors:
+	1) Operational Errors(Inevitable)
+		* Problems that we can predict will happen at some point in time, so we just need to handle them in advance.
+		* Eg: i) Invalid Path Accessed	
+			  ii) Invalid User Input
+			  iii) Failed to connect to server/db or Request timeout, etc
+	2) Programming Errors(Bugs)
+		* Reading properties on undefined.
+		* Passing a number where an obj is expected
+		* Using await w/o async, using req.query instead or req.body, etc
+
+	* We can throw all the possible operational errors in a global error handling middleware.
+	* This will allow a nice separation of error handling and business logic.
+
+#113 Implementing A Global Error Handling Middleware: 
+	If we use 4 parameters --> (err, req, res, next) then express automatically knows that it is an error
+	handling middleware
 */
