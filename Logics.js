@@ -171,4 +171,7 @@ Success / Fail(Client) / Error(Server)
 	certain event like saving a document to the database.
 	4 Types Of Middlewares:
 		1) Document	2) Query 3) Aggregate 4) Model middleware
+
+#111 Handling Unhandled Routes: If we place it at the end of all routes, then none of the handled routes, 
+	will reach here beacause it will be already handled by the existing routes.
 */
