@@ -196,4 +196,9 @@ Success / Fail(Client) / Error(Server)
 
 	* next(err) --> Express assumes that whenever we pass something into the next function, then it is an error.
 	* it will skip all the middlewares and directly go to the error catching middleware
+
+#114 Error Stack Strace: err.stack => it will return a stack of from where the error originated to where it 
+	went. We also want to make sure that this class is not added to the stack trace(AppError class). That is
+	done by Error.captureStackTrace(this, this.constructor)
+	We don't need to do this.message = message. Because that will already be done by its parent, Error class.
 */
