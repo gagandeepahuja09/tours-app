@@ -201,4 +201,18 @@ Success / Fail(Client) / Error(Server)
 	went. We also want to make sure that this class is not added to the stack trace(AppError class). That is
 	done by Error.captureStackTrace(this, this.constructor)
 	We don't need to do this.message = message. Because that will already be done by its parent, Error class.
+
+#115 Catching Errors In Async Functions 
+	* routes, expect a function, so catchAsync should return a function
+	* We are using try catch in every controller -> this is not very focused and clean
+	* So, we will create a function which will handle all of that, and wrap it into that function.
+	* The parameter for catchAsync will also be a function.
+	* Now, we will need next for all these functions, so that we can pass it to the global error handler 
+		middleware
+	* Example: createTour should be a function and not the result of calling a function.
+	* Therefore, catchAsync should be a function, which is then assigned to createTour
+	* ES6, catch(err => next(err)) -> We only need to specify the function name and it will automatically
+	* call it with the parameters that it receives. So, we can change catch(err => next(err)) to catch(next)
+	* .catch(next) ==> the catch method is available on all promises
+	* Flow => catchAsync => Next => Global Error Handler Middleware
 */
