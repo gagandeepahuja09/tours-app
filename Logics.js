@@ -227,5 +227,50 @@ Success / Fail(Client) / Error(Server)
 	* There is sync version also available of hash, but that will block the event loop and prevent the users
 	* from using the application
 	* Power of salting the password before hashing it --> if two users have same password, then also their
-	their hashed pwd will be different	
+	their hashed pwd will be different
+	
+#127 How Authentication With JWT Works	
+	* JWT --> They are a stateless solution to authentication
+	* There is no need to store any session state on the server --> Perfect for RESTful APIs
+	* Because RESTful APIs should always be stateless.
+	* Alternative is Session, storing user's login state --> Doesn't follow principle that RESTful APIs 
+		* should be stateless
+	* Statelesness ==> Server never relies on information from previous requests. If some info out of it was 
+	* important, the client would have sent it again in the request.
+	* All the authentication must happen over https
+
+	* Login STEPS
+		1) POST /login { email, password } (Client to Server)
+		2) If user and password, create unique JWT (On Server)
+		3) Send JWT to client (Server to Client)
+		4) Store the JWT on client in cookie or local storage (Client)
+
+	* Checking For Access STEPS
+		1) GET /someProtectedRouted (Client to Server)
+		2) Server checks if JWT provided by client is valid (Server)
+		3) Provides access depending on whether valid -> Sends protected data if valid (Server to Client)
+		
+	* Internal Working Of JWT --> Signing Algorithm
+		Header --> Metadata like algo and type
+		Payload --> Any info need like id, email, mobile, etc
+
+		1) Header + Payload + Secret = Signature
+		2) Header + Payload + Signature = JWT
+
+	* Verification
+		* Test Signature is created from Header + Payload + Secret and it is compared with the original signature
+		* Equal ==> Data has not been modified --> Authenticated
+		* Else ==> Not Authenticated
+
+#128 Signing Up Users
+	* We can't directly do User.create(req.body) ==> Because the user can change the req body and make himself
+	* as ADMIN
+	* Hence, we should pass all the required properties needed in User object
+	
+	* When the user signs up, then he is automatically logged in, so we need to implement that.
+	* jwt.sign(payload, secretKey, [options, callback]) --> This creates a new JW
+	* jwt.verify(token, secretKey, [options, callback])
+
+	* While signing up user, we now need to create a new JWT --> jwt.sign
+		* We also need to pass this in token in response
 */
