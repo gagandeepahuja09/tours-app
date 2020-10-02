@@ -215,4 +215,17 @@ Success / Fail(Client) / Error(Server)
 	* call it with the parameters that it receives. So, we can change catch(err => next(err)) to catch(next)
 	* .catch(next) ==> the catch method is available on all promises
 	* Flow => catchAsync => Next => Global Error Handler Middleware
+
+#126 Managing Passwords
+	* Never ever store, plain passwords in the database
+	* Managing Passwords is a perfect example of using Mongoose Middleware, specifically the pre-save middleware
+	* We want the password to be encrypted between the time we receive the data and the time it is persisted 
+	* in the database.
+	* Salt ==> Adding an additional string before encrypting
+	* Two options in bcrypt, 1) Add a salt string 
+							 2) Add a cost parameter, denoting how CPU intensive, the encryption will be
+	* There is sync version also available of hash, but that will block the event loop and prevent the users
+	* from using the application
+	* Power of salting the password before hashing it --> if two users have same password, then also their
+	their hashed pwd will be different	
 */

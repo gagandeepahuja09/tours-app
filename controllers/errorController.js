@@ -17,7 +17,7 @@ const sendErrorProd = (err, res) => {
     } else {
     // Programming or other unknown error, don't want to leak details to the client
     // 1) Log Error for ourselves
-    console.error('ERROR ::', err)
+    console.error('ERROR 👀', err)
     // 2) Send generic message to the client
         res.status(500).json({
             status: 'error',
@@ -31,8 +31,8 @@ module.exports = (err, req, res, next) => {
     err.status = err.status || 'error'
     const ENV = process.env.NODE_ENV
     if (ENV === 'development') {
-        sendErrorProd(err, res)    
+        sendErrorDev(err, res)    
     } else {
-        sendErrorDev(err, res)
+        sendErrorProd(err, res)
     }
 }

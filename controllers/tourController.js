@@ -2,6 +2,7 @@ const Tour = require('../models/tourModel')
 const APIFeatures = require('../utils/apiFeatures')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
+const bcrypt = require('bcryptjs')
 
 exports.aliasTopTours = (req, res, next) => {
     req.query.sort = '-ratingsAverage,price'
@@ -70,7 +71,7 @@ exports.deleteTour = catchAsync(async (req, res, next) => {
     if (!tour) {
         return next(new AppError('No tour found with the given ID', 404))
     }
-    
+
     res.status(204).json({
         status: 'success',
         data: 'deleted'
