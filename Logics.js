@@ -284,9 +284,20 @@ Success / Fail(Client) / Error(Server)
 	* If the credentials match, then we send the token back to the user, in the response
 
 #130 Protecting Tour Routes
+	// 1. Getting token and checking if it's there
+    // 2. Token Verification
+    // 3. Check if user still exists
+    // 4. Check if user changed password after the token was issued
 	* Step 1: We check if token is sent or not in req.headers
 		* Standard: We should always use a header with name of Authorization
 		* Key: Authorization
 		* Value: `Bearer {token}`
+	
+
+#131 Protecting Tour Routes 2
 	* Step 2: Token Verification
+		* We will verify using jwt.verify(token, secretKey, callback)
+		* We can promisify it by using util library which is built-in in Node
+	* Step 3: Check If User Still Exists. What if the user is deleted after this process? Then, we shouldn't 
+	* allow login
 */

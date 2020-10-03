@@ -1,3 +1,5 @@
+const AppError = require("../utils/appError")
+
 const sendErrorDev = (err, res) => {
     res.status(err.statusCode).json({
         status: err.statusCode,
@@ -6,6 +8,10 @@ const sendErrorDev = (err, res) => {
         stack: err.stack
     })
 }
+
+const handleJWTError = () => new AppError('Invalid token. Please login again', 401)
+
+const handleJWTExpiredError = () => new AppError('Token expired. Please login again', 401)
 
 const sendErrorProd = (err, res) => {
     // Trusted, operational error : Send message to client
@@ -33,6 +39,9 @@ module.exports = (err, req, res, next) => {
     if (ENV === 'development') {
         sendErrorDev(err, res)    
     } else {
-        sendErrorProd(err, res)
+        let error = { ...err }
+        if (err.name === "JsonWebTokenError") error = handleJWTError()
+        if (err.name === "TokenExpiredError") error = handleJWTExpiredError()
+        sendErrorProd(error, res)
     }
 }
