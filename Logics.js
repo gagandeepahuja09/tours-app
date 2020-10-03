@@ -273,4 +273,12 @@ Success / Fail(Client) / Error(Server)
 
 	* While signing up user, we now need to create a new JWT --> jwt.sign
 		* We also need to pass this in token in response
+	// 404 --> Not Found
+	// 400 --> Bad Request
+	// 401 --> Unauthorized
+
+#129 Logging In Users
+	* Only issue the token when it matches the email and password 
+	* .methods in mongoose ==> available to all documents
+	* Eg user.correctPassword
 */
