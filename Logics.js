@@ -281,4 +281,12 @@ Success / Fail(Client) / Error(Server)
 	* Only issue the token when it matches the email and password 
 	* .methods in mongoose ==> available to all documents
 	* Eg user.correctPassword
+	* If the credentials match, then we send the token back to the user, in the response
+
+#130 Protecting Tour Routes
+	* Step 1: We check if token is sent or not in req.headers
+		* Standard: We should always use a header with name of Authorization
+		* Key: Authorization
+		* Value: `Bearer {token}`
+	* Step 2: Token Verification
 */
