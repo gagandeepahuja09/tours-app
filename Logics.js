@@ -323,4 +323,18 @@ Success / Fail(Client) / Error(Server)
 	* In the protect middleware, we store information about the current user in req.user
 	* So, we can check if req.user.role has any element from the roles 
 		array(which are the params of restrictTo function)
+
+#134 Password Reset Functionality: Reset Token
+	* User has option of resetting password, if he has forgotten the password
+	* He will receive an email where he can reset the password
+	* 2 APIs --> /forgotPassword req body => email
+			 --> /resetPassword req body => new password, new token
+	* We will create 2 
+	* Forgot Password Steps:
+		1) Get user based on email
+		2) Generate random reset token
+		3) Send it to user on the email provided
+	* We will save password reset token in db in encrypted form and send the unecrypted one on email
+	* We won't use bcrypt here. We will use crypto library random bytes here 
+	* This will have very less expiry time ~ 10 mins. We will store this time also in the db
 */

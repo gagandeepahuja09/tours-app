@@ -11,7 +11,6 @@ const signToken = id => {
 }
 
 exports.signup = catchAsync(async (req, res, next) => {
-    console.log('Here we are')
     const { name, email, password, passwordConfirm, role } = req.body
     const newUser = await User.create({
         name,
@@ -85,3 +84,14 @@ exports.restrictTo = (...roles) => {
         next()
     }
 }
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
+        next(new AppError('No user found with this email address', 400))
+    }
+    const resetToken = user.createPasswordResetToken()
+    await user.save({ validateBeforeSave: false })
+
+
+})
