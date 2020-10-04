@@ -276,6 +276,7 @@ Success / Fail(Client) / Error(Server)
 	// 404 --> Not Found
 	// 400 --> Bad Request
 	// 401 --> Unauthorized
+	// 403 --> Forbidden
 
 #129 Logging In Users
 	* Only issue the token when it matches the email and password 
@@ -301,4 +302,25 @@ Success / Fail(Client) / Error(Server)
 	* Step 3: Check If User Still Exists. What if the user is deleted after this process? Then, we shouldn't 
 		allow login
 	* Step 4: If user changed his password after login, then it should not be allowed to signin
+		* We can save the time at which password was changed, in the DB.
+		* The promise of jwt.verify, returns iat, which is issued at timestamp
+		* We can compare both and then decide if password was changed after issuing the token.
+
+#132 Advanced Postman Setup
+	* This will helps us in setting and using variables
+	* 1. When we login or signup, we want to set the Authorization header in all of our protected routes
+		* pm.environment.set("jwt", pm.response.json().token); ==> Setting token in test section of Postman
+		* Now in Authorization section of protected routes, we can use this as {{ jwt }}.
+
+#133 Authorization: User Roles And Permissions
+	* Some actions can only be performed by certain users, even if they are logged in.
+	* Eg. Only admins can delete a tour
+	* So, for delete tour, it will first pass through the protect middleware
+	* Then we will create a new middleware and specify, which all users can use this
+	* authController.restrictTo('admin')
+	* restrictTo can have variable number of parameters
+	* A middleware cannot have any parameters, so we will create a function, that will return a middleware
+	* In the protect middleware, we store information about the current user in req.user
+	* So, we can check if req.user.role has any element from the roles 
+		array(which are the params of restrictTo function)
 */
