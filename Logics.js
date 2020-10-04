@@ -299,5 +299,6 @@ Success / Fail(Client) / Error(Server)
 		* We will verify using jwt.verify(token, secretKey, callback)
 		* We can promisify it by using util library which is built-in in Node
 	* Step 3: Check If User Still Exists. What if the user is deleted after this process? Then, we shouldn't 
-	* allow login
+		allow login
+	* Step 4: If user changed his password after login, then it should not be allowed to signin
 */
