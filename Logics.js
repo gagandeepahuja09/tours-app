@@ -341,4 +341,13 @@ Success / Fail(Client) / Error(Server)
 #135 Sending mails with Nodemailer
 	* We will use a dev service that fakes to send emails, but in reality traps them in a dev inbox --> mailtrap.io
 	* We will set the reset URL, which is /reset-password/:token on email
+
+#136 Password Reset Functionality
+	// 1. Get user based on token
+    // 2. If user exists and the token has not expired, then reset password
+    // 3. Update the changedPasswordAfter property
+	// 4. Log the user in, send JWT
+	* Rather than using update, we are using .save() ==> Because
+		1) We will be needing pre save hooks for password encryption
+		2) update does not take care of schema validations but save does 
 */

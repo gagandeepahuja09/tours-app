@@ -52,6 +52,16 @@ userSchema.pre('save', async function(next) {
     next()
 })
 
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password') || this.isNew)   return next()
+    this.password = await bcrypt.hash(this.password, 12)
+
+    // We subtract one second to ensure password changed at time < iat for jwt
+    // So that user is able to login
+    this.passwordChangedAt = Date.now() - 1000
+    next()
+})
+
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
     return await bcrypt.compare(candidatePassword, userPassword)
 }
