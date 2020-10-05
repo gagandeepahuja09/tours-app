@@ -337,4 +337,8 @@ Success / Fail(Client) / Error(Server)
 	* We will save password reset token in db in encrypted form and send the unecrypted one on email
 	* We won't use bcrypt here. We will use crypto library random bytes here 
 	* This will have very less expiry time ~ 10 mins. We will store this time also in the db
+
+#135 Sending mails with Nodemailer
+	* We will use a dev service that fakes to send emails, but in reality traps them in a dev inbox --> mailtrap.io
+	* We will set the reset URL, which is /reset-password/:token on email
 */
