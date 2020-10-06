@@ -5,6 +5,18 @@ const jwt = require('jsonwebtoken')
 const AppError = require('../utils/appError')
 const { promisify } = require('util')
 const sendEmail = require('../utils/email')
+const { create } = require('../models/userModel')
+
+const createSendToken = (user, statusCode, res) => {
+    const token = signToken(user._id)
+    res.status(statusCode).json({
+        status: 'Success',
+        token,
+        data: {
+            user
+        }
+    })
+}
 
 const signToken = id => { 
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY, {
@@ -21,16 +33,7 @@ exports.signup = catchAsync(async (req, res, next) => {
         passwordConfirm,
         role
     })
-
-    const token = signToken(newUser._id)
-
-    res.status(201).json({
-        status: 'Success',
-        token,
-        data: {
-            user: newUser
-        }
-    })
+    createSendToken(newUser, 201, res)
 })
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -45,12 +48,7 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError('Incorrect email or password!', 401))
     }
 
-    const token = signToken(user._id)
-
-    res.status(200).json({
-        status: 'success',
-        token
-    })
+    createSendToken(user, 200, res)
 })
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -133,9 +131,22 @@ exports.resetPassword = catchAsync( async(req, res, next) => {
     user.passwordResetExpires = undefined
     await user.save()
 
-    const token = signToken(user.id)
-    res.status(200).json({
-        status: 'success',
-        token
-    })
+    createSendToken(user, 200, res)
+})
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+    // 1. Get user from collection
+    // Since user has to be already logged in, so the user details are stored in req.user in protect middleware
+    const user = await User.findById(req.user._id).select('+password')
+    if (!user) {
+        next(new AppError('No user found with the given id', 400))
+    }
+    if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+        next(new AppError('The password entered is incorrect', 401))
+    }
+    user.password = req.body.password,
+    user.passwordConfirm = req.body.passwordConfirm
+    await user.save()
+
+    createSendToken(user, 200, res)
 })
