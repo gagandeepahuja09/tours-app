@@ -350,4 +350,44 @@ Success / Fail(Client) / Error(Server)
 	* Rather than using update, we are using .save() ==> Because
 		1) We will be needing pre save hooks for password encryption
 		2) update does not take care of schema validations but save does 
+
+#140 Security Best Practices
+	Compromised Databases
+		* Strongly encrypted passwords with salt and hash(bcrypt)
+		* Strongly encrypted password reset tokens(SHA 256)
+	
+	Brute Force Attacks
+		* Use bcrypt(to make login requests slow)
+		* Implement rate limiting(express-rate-limit)
+		* Implement maximum login limits
+	
+	Cross-Site Scripting(XSS) Attacks
+		* Hacker tries to inject script and run our code. So, he can also try to get the Jwt secret key
+		* Solution: We can store JWT in HTTP only cookies
+		* Sanitize user input
+		* Set special HTTP headers(helmet package)
+
+	Denial Of Service(DOS) Attacks
+		* Implement rate limiting(express-rate-limit)
+		* Limit body payload(in body-parser)
+		* Avoid evil regular expression --> Those which are very slow for invalid inputs
+
+	NoSQL Query Injection
+		* Use Mongoose for MongoDB(because of Schema Types)
+		* Sanitize User Input Data
+
+	Other Best Practices
+		* Always use HTTPS
+		* Create random password reset tokens with expiry dates
+		* Deny access to JWT after password change
+		* Don't commit sensitive config data to Git
+		* Don't send error details to clients
+		* Prevent parameter pollution causing Uncaught Exceptions
+		* Implement two factor authentication(OTP)
+		* Keep user logged in with refresh tokens
+		* Confirm email address after first creating account
+		* Implement a blacklist of untrusted JWT
+		* Require re-authentication before a high-value action
+		* Prevent cross-site request forgery(csurf package) 
+
 */
