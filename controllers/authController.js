@@ -9,6 +9,17 @@ const { create } = require('../models/userModel')
 
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id)
+
+    const jwtCookieOptions = {
+        expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+        ),
+        secure: false,
+        httpOnly: true
+    }
+    if (process.env.NODE_ENV === 'production')    jwtCookieOptions.secure = true
+    res.cookie('jwt', token, jwtCookieOptions)
+    user.password = undefined
     res.status(statusCode).json({
         status: 'Success',
         token,

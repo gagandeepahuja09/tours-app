@@ -390,4 +390,11 @@ Success / Fail(Client) / Error(Server)
 		* Require re-authentication before a high-value action
 		* Prevent cross-site request forgery(csurf package) 
 
+#140 Sending JWT Via Cookie
+	* Currently we are sending JWT only as a response.
+	* This will allow the browser to save it in a more secure way.
+	* Cookie: Small piece of text that the server sends to the client.
+	* We will set secure to true. This will allow the cookie to be sent only from HTTPS encrypted connection.
+	* httpOnly will be true. So that JWT cookie cannot be modified in any way by the browser.
+	  
 */
