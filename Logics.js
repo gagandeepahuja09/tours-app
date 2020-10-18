@@ -415,4 +415,119 @@ Success / Fail(Client) / Error(Server)
 	* Package that can help --> hpp --> http parameter pollution
 	* But for some parameters, we want them to be used multiple times. Example: duration, ratingsAverage, etc.
 	* We can whitelist those parameters in hpp
+
+## Section 11: Modelling Data And Advanced Mongoose
+
+# 147 MongoDB Data Modelling
+	* Real world scenario -> Unstructured data -> Structure, logical data model
+	* Online shop --> Databases: categories, products, suppliers, customers, orders, cart, etc -->
+		Making relationship between them
+	STEPS
+	* Different types of relationships b/w data
+	* Referencing / Normalization v/s Embedding / Denormalization
+	* Choosing when to reference or embed
+	* Types of referencing
+
+	1. Types Of Relationship Between Data
+		* 1:1, 1:Many, Many:Many
+		* 1:Many is the most frequently used relationship
+		* In relational db there is only one type of 1:many relationship
+		* But in Mongo DB, there are 3 types of 1:Many relationship(Few, Many, Ton). Which helps in deciding whether to use
+		* referencing or embedding
+		* Examples
+			* 1 : 1 ==> movie -> name
+			* 1 : Few ==> movie -> awards
+			* 1 : Many ==> movie -> reviews (hundreds / thousands)
+			* 1 : Ton ==> app -> logs (millions)
+			* Many : Many ==> movie <-> actors
+		* Referencing v/s Embedding
+			* Referenced / Normalized
+			Example: Child Referencing
+			{
+				"_id": "",
+				"title": "Set It Up",
+				"release": "2018",
+				"actors": [
+					ObjectID('555'),
+					ObjectID('777')
+				]
+			}
+			PRO: We can query both the documents very easily
+			CON: We need to make 2 queries if we need all the info  
+
+			* Embedded / Denormalized
+			{
+				"_id": "",
+				"title": "Set It Up",
+				"release": "2018",
+				"actors": [
+					{
+						"name": "A",
+						"age": "22",
+						"born": "xyz"
+					},
+					{
+						"name": "B",
+						"age": "25",
+						"born": "abc"
+					}
+				]
+			}
+			PRO: If we need complete info, we only need to query the document only once.
+			CON: There is no way to apply the query directly to the actors(embedded document).
+
+		When to Embed and When to reference?
+		Factors To Decide
+			1. Relationship Type(1: Few, 1:Many, etc)
+			2. Data Access Patterns: How often is data read/written (Read / Write Ratio)
+			3. Data Closeness: How much is the data related, how we want to query
+
+			1. Relationship Type:
+				Embedding: 1:Few, 1:Many
+				Referencing: 1:Many, 1:Ton, Many:Many(Otherwise the document size might exceed 16mb the default max size)
+
+			2. Data access patterns:
+				Embedding: * Data is mostly read
+						   * Data does not update quickly(So, embedding is better, because we won't need to insert in both the documents)
+						   * ex: Movies + Images(Those won't update frequently)
+						   * High read / write ratio
+				Referencing: * Data is updated a lot.eg. (Movies + Reviews)(We keep on upvoting and downvoting the review)
+							 * Low read/write ratio.
+
+			3. Data Closeness
+				Embedding: Datasets really belong together. Eg. user + email addresses
+				Referencing: We frequently need to query the documents on their own.
+
+		Types Of Referencing:
+			1. Child Referencing
+			2. Parent Referencing
+			3. Two Way Referencing
+
+			1. Child Referencing: We store unique ID of all children ids in parent logs
+				* Good for 1 : Few
+				* Not ideal for 1 : Many, 1 : Ton. Because we will have to store all children ids
+				logs: {
+					ObjectId('.....'),
+					ObjectId('.....'),
+					ObjectId('.....'),
+					....... // many more
+				}
+				* In this parent and children are very tightly coupled(not always ideal)
+			2. Parent Referencing: We store the reference for the parent. Eg. Each log stores parent id
+			3. Two Way Referencing: Many : Many relationships
+				* Example: Movie <-> Actor
+					movie document: 
+					{
+						actors: {
+							ObjectID(),
+							...
+						}
+					}
+					actor document: 
+					{
+						movies: {
+							ObjectID(),
+							...
+						}
+					}
 */
