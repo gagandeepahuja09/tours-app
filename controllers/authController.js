@@ -18,7 +18,9 @@ const createSendToken = (user, statusCode, res) => {
         httpOnly: true
     }
     if (process.env.NODE_ENV === 'production')    jwtCookieOptions.secure = true
+
     res.cookie('jwt', token, jwtCookieOptions)
+    
     user.password = undefined
     res.status(statusCode).json({
         status: 'Success',
