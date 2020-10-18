@@ -6,13 +6,13 @@ V1 => Specify version so that if we make some change, code does not break for ex
 
 Success / Fail(Client) / Error(Server)
 
-#52 Handling GET Requests
+# 52 Handling GET Requests
 
 	JSON.parse() => String becomes JS object
 
 	var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}')
 
-#53 Handling POST Requests
+# 53 Handling POST Requests
 
 	Middleware => As name suggest, it stands b/w request and response => It can modify incoming request data 
 	Out of the box, express does not put that data in request body => To have that We have to use middleware => app.use(express.json())
@@ -22,11 +22,11 @@ Success / Fail(Client) / Error(Server)
 
 	JSON.parse() => JS object to string
 
-#54 Handling PATCH Requests
+# 54 Handling PATCH Requests
 
 	Only send the data, which has to be updated. In PUT, we send the entire object 
 
-#58 Middleware & The Request Response Cycle: 
+# 58 Middleware & The Request Response Cycle: 
 
 	Middleware: Function that is called in between or receiving the request and sending the response.
 	* We can say that in Express, everything is a middleware(Even routers)
@@ -36,27 +36,27 @@ Success / Fail(Client) / Error(Server)
 	* The entire process of receiving an incoming request, going through all the middlewares and then sending the
 	response back to the client is called, the request response cycle.
 
-#59 Creating Our Own Middleware 
+# 59 Creating Our Own Middleware 
 	If use app.use() => It will be tied to each and every request
 	We need to call the next inside, because otherwise, the request response cycle will be stuck at that point.
 	res.send() => Will end the req res cycle. Any middlewares after it, will be ignored.	
 
-#60 Using 3rd Party Middleware
+# 60 Using 3rd Party Middleware
 	Eg. Morgan => Logging the API
 
-#62 Creating And Mounting Multiple Routers
+# 62 Creating And Mounting Multiple Routers
 
-#64 Param Middlewares
+# 64 Param Middlewares
 	* Middleware stack order depends on the order in which the code is written.
 	* return statement ends the request-response cycle.
 	* next() helps to move to next element in the middleware stack.
 	* Use-case: When we want a combination of similar routes to go through a middleware. eg. a validator to 
 	check if the given id is valid.
 
-#65 Chaining Multiple Middlewares
+# 65 Chaining Multiple Middlewares
 	* We do this, so that the route handler can focus on its task and not on common tasks like validation & 
 	authentication, etc.
-#70 MongoDB Intro
+# 70 MongoDB Intro
 	Database => Table -> Collections
 				Rows  -> Documents
 	Features Of Mongo:
@@ -74,17 +74,17 @@ Success / Fail(Client) / Error(Server)
 	possible in SQL, so we need to find workarounds => generally using joins.
 	* We can also use embedded documents in mongo. Example: embedding comments document in posts document.
 
-#73 Creating A Local Database
+# 73 Creating A Local Database
 	* use natours-test => Create a new db and move to it(Only move if already exists)
 	* show collections
 	* db.tours.insertOne() => Will create a tours collection if does not already exist.
 	* db.tours.insertOne({ name: "The Forest Hiker", price: 297, rating: 4.7 }) => Creates a collection and 
 	inserts a document.
 
-#74 CRUD: Creating Documents
+# 74 CRUD: Creating Documents
 	* db.tours.insertMany([{}, {}])
 
-#75 CRUD: Querying(Reading) Documents
+# 75 CRUD: Querying(Reading) Documents
 	* db.tours.insertMany([{}, {}])
 	* db.tours.find({ class: "below-avg" })
 	* AND Condition: db.tours.find({ price: { $lte: 200 }, rating: { $gt: 4 } })		
@@ -92,18 +92,18 @@ Success / Fail(Client) / Error(Server)
 	* Choosing specific attributes: In the second parameter of find
 			db.tours.find({ $or: [{ price: { $lte: 200 } }, { rating: { $gt: 4.5 } }] }, { name: 1, rating: 2 })
 	
-#76: CRUD: Updating Documents
+# 76: CRUD: Updating Documents
 	* db.tours.updateMany({ price: { $gt:300 }, rating: { $gte: 4.5 }  }, { $set: { premium: true } })
 
-#77 CRUD: Deleting Documents
+# 77 CRUD: Deleting Documents
 	* db.tours.deleteMany({ }) => condn just like find
-#78 Compass GUI for Mongo
-#79 Hosted DB With Atlas
-#80 Connecting To Our Hosted DB
-#82 Connecting Our DB With The Express App
+# 78 Compass GUI for Mongo
+# 79 Hosted DB With Atlas
+# 80 Connecting To Our Hosted DB
+# 82 Connecting Our DB With The Express App
 	Cluster: An instance of a database
 	* Using mongoose.connect() and specifying DB in .env file.
-#83 What is Mongoose
+# 83 What is Mongoose
 	* Mongoose is an ODM(Object Data Modelling) library for MongoDB and Node.js.
 	* It is a layer of abstraction over MongoDB, just like Express is for Node.js.
 	* We can write JS code, which will then interact with the database.
@@ -116,9 +116,9 @@ Success / Fail(Client) / Error(Server)
 	* Mongoose Model: A wrapper for the schema, providing an interface to the database for CRUD operations.
 	* Schema is like a structure, and model like a class. 
 
-#84 Creating a Simple Tour Model	
+# 84 Creating a Simple Tour Model	
 
-#86 MVC Architecture
+# 86 MVC Architecture
 	Model --> Business Logic
 		* Concerned about the business problem, we are actually trying to solve.
 		* Directly related to business rules, how the business works.
@@ -129,16 +129,16 @@ Success / Fail(Client) / Error(Server)
 	Controller  --> Application Logic
 		* Concerned about request and response
 
-#88 Creating Documents
+# 88 Creating Documents
 	const newTour = await Tour.create(req.body)
 	async-await: Should definitely use try-catch
 
-#94 Making The API Better: Filtering
+# 94 Making The API Better: Filtering
 	const queryObj = req.query
 	* We cannot directly use queryObj like this because it will be a hard copy.
 	* Shallow copy => const queryObj = { ...req.query }
 
-#96 Making The API Better: Sorting
+# 96 Making The API Better: Sorting
 	let query = tour.find(queryObj)
 	* We keep this in a variable, so that we can chain it later.
 	* query = query.sort(req.query.sort)
@@ -146,36 +146,36 @@ Success / Fail(Client) / Error(Server)
 	* http://localhost:4199/api/V1/tours?sort=price,-ratingsAverage, -ratingsQuantity
 	* query.sort(price ratingsAverage ratingsQuantity)
 
-#97 Making The API Better: Limiting Fields	
+# 97 Making The API Better: Limiting Fields	
 	* Hiding properties in schema => set select as false in properties.
 	* Selecing(Projection): query.select('name') 
 	* Excluding properties: query.select('-age')
 
-#98 Making The API Better: Pagination
+# 98 Making The API Better: Pagination
 	* We can use skip and limit in MongoDB to implement pagination.
 	* If skip size > number of documents: throw an error => it will go to catch block.
 
-#99 Making The API Better: Aliasing
+# 99 Making The API Better: Aliasing
 	* Chaining a middleware by specifying the request query 
 
 # 100 Refactoring API Features By Creating A Class
 	* Adding a class in utils folder with all these features
 
-#101 Aggregation Pipeline
+# 101 Aggregation Pipeline
 
-#104 Virtual Properties: Used mostly with conversions possible from one form to another(one property can be calculated 
+# 104 Virtual Properties: Used mostly with conversions possible from one form to another(one property can be calculated 
 	from a given property).
 
 
-#105 Document Middleware: Mongoose Middleware: Pre or post hooks: Allow an event to occur, before or after a 
+# 105 Document Middleware: Mongoose Middleware: Pre or post hooks: Allow an event to occur, before or after a 
 	certain event like saving a document to the database.
 	4 Types Of Middlewares:
 		1) Document	2) Query 3) Aggregate 4) Model middleware
 
-#111 Handling Unhandled Routes: If we place it at the end of all routes, then none of the handled routes, 
+# 111 Handling Unhandled Routes: If we place it at the end of all routes, then none of the handled routes, 
 	will reach here beacause it will be already handled by the existing routes.
 
-#112 Error Handling In Express: Overview
+# 112 Error Handling In Express: Overview
 	Two Types Of Errors:
 	1) Operational Errors(Inevitable)
 		* Problems that we can predict will happen at some point in time, so we just need to handle them in advance.
@@ -190,19 +190,19 @@ Success / Fail(Client) / Error(Server)
 	* We can throw all the possible operational errors in a global error handling middleware.
 	* This will allow a nice separation of error handling and business logic.
 
-#113 Implementing A Global Error Handling Middleware: 
+# 113 Implementing A Global Error Handling Middleware: 
 	If we use 4 parameters --> (err, req, res, next) then express automatically knows that it is an error
 	handling middleware
 
 	* next(err) --> Express assumes that whenever we pass something into the next function, then it is an error.
 	* it will skip all the middlewares and directly go to the error catching middleware
 
-#114 Error Stack Strace: err.stack => it will return a stack of from where the error originated to where it 
+# 114 Error Stack Strace: err.stack => it will return a stack of from where the error originated to where it 
 	went. We also want to make sure that this class is not added to the stack trace(AppError class). That is
 	done by Error.captureStackTrace(this, this.constructor)
 	We don't need to do this.message = message. Because that will already be done by its parent, Error class.
 
-#115 Catching Errors In Async Functions 
+# 115 Catching Errors In Async Functions 
 	* routes, expect a function, so catchAsync should return a function
 	* We are using try catch in every controller -> this is not very focused and clean
 	* So, we will create a function which will handle all of that, and wrap it into that function.
@@ -216,7 +216,7 @@ Success / Fail(Client) / Error(Server)
 	* .catch(next) ==> the catch method is available on all promises
 	* Flow => catchAsync => Next => Global Error Handler Middleware
 
-#126 Managing Passwords
+# 126 Managing Passwords
 	* Never ever store, plain passwords in the database
 	* Managing Passwords is a perfect example of using Mongoose Middleware, specifically the pre-save middleware
 	* We want the password to be encrypted between the time we receive the data and the time it is persisted 
@@ -229,7 +229,7 @@ Success / Fail(Client) / Error(Server)
 	* Power of salting the password before hashing it --> if two users have same password, then also their
 	their hashed pwd will be different
 	
-#127 How Authentication With JWT Works	
+# 127 How Authentication With JWT Works	
 	* JWT --> They are a stateless solution to authentication
 	* There is no need to store any session state on the server --> Perfect for RESTful APIs
 	* Because RESTful APIs should always be stateless.
@@ -262,7 +262,7 @@ Success / Fail(Client) / Error(Server)
 		* Equal ==> Data has not been modified --> Authenticated
 		* Else ==> Not Authenticated
 
-#128 Signing Up Users
+# 128 Signing Up Users
 	* We can't directly do User.create(req.body) ==> Because the user can change the req body and make himself
 	* as ADMIN
 	* Hence, we should pass all the required properties needed in User object
@@ -278,13 +278,13 @@ Success / Fail(Client) / Error(Server)
 	// 401 --> Unauthorized
 	// 403 --> Forbidden
 
-#129 Logging In Users
+# 129 Logging In Users
 	* Only issue the token when it matches the email and password 
 	* .methods in mongoose ==> available to all documents
 	* Eg user.correctPassword
 	* If the credentials match, then we send the token back to the user, in the response
 
-#130 Protecting Tour Routes
+# 130 Protecting Tour Routes
 	// 1. Getting token and checking if it's there
     // 2. Token Verification
     // 3. Check if user still exists
@@ -295,7 +295,7 @@ Success / Fail(Client) / Error(Server)
 		* Value: `Bearer {token}`
 	
 
-#131 Protecting Tour Routes 2
+# 131 Protecting Tour Routes 2
 	* Step 2: Token Verification
 		* We will verify using jwt.verify(token, secretKey, callback)
 		* We can promisify it by using util library which is built-in in Node
@@ -306,13 +306,13 @@ Success / Fail(Client) / Error(Server)
 		* The promise of jwt.verify, returns iat, which is issued at timestamp
 		* We can compare both and then decide if password was changed after issuing the token.
 
-#132 Advanced Postman Setup
+# 132 Advanced Postman Setup
 	* This will helps us in setting and using variables
 	* 1. When we login or signup, we want to set the Authorization header in all of our protected routes
 		* pm.environment.set("jwt", pm.response.json().token); ==> Setting token in test section of Postman
 		* Now in Authorization section of protected routes, we can use this as {{ jwt }}.
 
-#133 Authorization: User Roles And Permissions
+# 133 Authorization: User Roles And Permissions
 	* Some actions can only be performed by certain users, even if they are logged in.
 	* Eg. Only admins can delete a tour
 	* So, for delete tour, it will first pass through the protect middleware
@@ -324,7 +324,7 @@ Success / Fail(Client) / Error(Server)
 	* So, we can check if req.user.role has any element from the roles 
 		array(which are the params of restrictTo function)
 
-#134 Password Reset Functionality: Reset Token
+# 134 Password Reset Functionality: Reset Token
 	* User has option of resetting password, if he has forgotten the password
 	* He will receive an email where he can reset the password
 	* 2 APIs --> /forgotPassword req body => email
@@ -338,11 +338,11 @@ Success / Fail(Client) / Error(Server)
 	* We won't use bcrypt here. We will use crypto library random bytes here 
 	* This will have very less expiry time ~ 10 mins. We will store this time also in the db
 
-#135 Sending mails with Nodemailer
+# 135 Sending mails with Nodemailer
 	* We will use a dev service that fakes to send emails, but in reality traps them in a dev inbox --> mailtrap.io
 	* We will set the reset URL, which is /reset-password/:token on email
 
-#136 Password Reset Functionality
+# 136 Password Reset Functionality
 	// 1. Get user based on token
     // 2. If user exists and the token has not expired, then reset password
     // 3. Update the changedPasswordAfter property
@@ -351,7 +351,7 @@ Success / Fail(Client) / Error(Server)
 		1) We will be needing pre save hooks for password encryption
 		2) update does not take care of schema validations but save does 
 
-#140 Security Best Practices
+# 140 Security Best Practices
 	Compromised Databases
 		* Strongly encrypted passwords with salt and hash(bcrypt)
 		* Strongly encrypted password reset tokens(SHA 256)
@@ -390,14 +390,14 @@ Success / Fail(Client) / Error(Server)
 		* Require re-authentication before a high-value action
 		* Prevent cross-site request forgery(csurf package) 
 
-#140 Sending JWT Via Cookie
+# 140 Sending JWT Via Cookie
 	* Currently we are sending JWT only as a response.
 	* This will allow the browser to save it in a more secure way.
 	* Cookie: Small piece of text that the server sends to the client.
 	* We will set secure to true. This will allow the cookie to be sent only from HTTPS encrypted connection.
 	* httpOnly will be true. So that JWT cookie cannot be modified in any way by the browser.
 	
-#144 Data Sanitization
+# 144 Data Sanitization
 	* NoSQL query injection: We can specify queries in JSON like 
 	{
 		"email": { "$gt": "" }, 
@@ -407,4 +407,12 @@ Success / Fail(Client) / Error(Server)
 	* If he just keeps on putting passwords -> Package with middleware => express-mongo-sanitize
 	* For preventing malicious HTML code from being injected, we can use xss-clean
 	* validator package also has many functions for proctecting against xss
+
+# 145 Preventing Parameter Pollution
+	* Example: sort=price,-ratingsAverage, -ratingsQuantity&fields=name&page=1&limit=15&sort=ratings
+	* this.queryString.sort will now be an array and we cannot we split function. Hence it will result in 
+	* internal server error
+	* Package that can help --> hpp --> http parameter pollution
+	* But for some parameters, we want them to be used multiple times. Example: duration, ratingsAverage, etc.
+	* We can whitelist those parameters in hpp
 */
