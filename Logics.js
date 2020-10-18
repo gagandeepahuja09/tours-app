@@ -396,5 +396,15 @@ Success / Fail(Client) / Error(Server)
 	* Cookie: Small piece of text that the server sends to the client.
 	* We will set secure to true. This will allow the cookie to be sent only from HTTPS encrypted connection.
 	* httpOnly will be true. So that JWT cookie cannot be modified in any way by the browser.
-	  
+	
+#144 Data Sanitization
+	* NoSQL query injection: We can specify queries in JSON like 
+	{
+		"email": { "$gt": "" }, 
+		"password": "password"
+	}
+	This will allow anyone to easily login
+	* If he just keeps on putting passwords -> Package with middleware => express-mongo-sanitize
+	* For preventing malicious HTML code from being injected, we can use xss-clean
+	* validator package also has many functions for proctecting against xss
 */
