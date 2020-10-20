@@ -13,7 +13,7 @@ mongoose.connect(DB, {
     useFindAndModify: false
 }).then(con => {console.log('DB Connection successful') })
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'))
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'))
 
 const importData = async () => {
     try {
