@@ -530,4 +530,26 @@ Success / Fail(Client) / Error(Server)
 							...
 						}
 					}
+
+#148 Designing Our Data Model
+	* Documents: tours, users, reviews, locations, bookings
+	* user <----> reviews
+		* 1 : Many relationship
+		* Parent referencing. So in each review, we will store a user id. Why Parent Referencing?
+			1. The no. of reviews can be very large.(1 : Many or 1 : Ton).
+			2. We will need to update and query the reviews on their own a lot.
+	* Similarily tours <---> reviews will also be 1 : Many and Parent Referencing. So for each review we will have a userid and a tourid
+	* tours <--> locations is Few:Few => We can use embedding and embed all locations in a tour. Why?
+		1. The locations are not queryable on their own.
+		2. The no. for both is few.
+	* tours <---> users 
+		* This relationship will be used for users of type tour guides.
+		* The relationship is few : few.
+		* So, we can use child referencing
+		* Each tour will have a list of user ids
+	* bookings will store specific info related to the user and tour, like cost, time created, etc
+	* bookings <---> users 1 : Many
+	* booking <---> tours 1 : Many
+	* Both relations will be parent referencing
+	* We will store both tour_id and user_id for a booking
 */
