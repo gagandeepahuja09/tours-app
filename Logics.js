@@ -531,7 +531,7 @@ Success / Fail(Client) / Error(Server)
 						}
 					}
 
-#148 Designing Our Data Model
+# 148 Designing Our Data Model
 	* Documents: tours, users, reviews, locations, bookings
 	* user <----> reviews
 		* 1 : Many relationship
@@ -552,4 +552,37 @@ Success / Fail(Client) / Error(Server)
 	* booking <---> tours 1 : Many
 	* Both relations will be parent referencing
 	* We will store both tour_id and user_id for a booking
+
+# 149 Modelling Locations: Geospatial Data
+	* Locations will be an array of objects. Object will have info like coordinates, type(Point), address, 
+	day(in which we will visit this location in tour), description
+	* locations: [
+        {
+            type: {
+                type: String,
+                default: 'Point',
+                enum: ['Point']
+            },
+            coordinates: [Number],
+            address: String,
+            description: String,
+            day: Number
+        }
+	]
+	
+# 150 Modelling Tour Guides: Embedding
+	* We will specify a list of ids: "guides": [
+            "5f918b265897584c85fd2c71",
+            "5f918b265897584c85fd2c72"
+		]
+	and then guides will automatically be populated with all details of corresponding user id
+	* we will do this using pre save middleware
+	* TODO: learn about Promise.all(), etc
+	tourSchema.pre('save', async function(next) {
+		const guidesPromises = this.guides.map(async id => await User.findById(id))
+		this.guides = await Promise.all(guidesPromises)
+		next()
+	})
+	* Embedding, has its set of disadvantages here, eg. what if we update some details of the user(tour guide), then we will 
+	need to do update here also.
 */
