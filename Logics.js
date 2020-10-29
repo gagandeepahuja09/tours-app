@@ -572,17 +572,30 @@ Success / Fail(Client) / Error(Server)
 	
 # 150 Modelling Tour Guides: Embedding
 	* We will specify a list of ids: "guides": [
-            "5f918b265897584c85fd2c71",
-            "5f918b265897584c85fd2c72"
-		]
+		"5f918b265897584c85fd2c71",
+		"5f918b265897584c85fd2c72"
+	]
 	and then guides will automatically be populated with all details of corresponding user id
 	* we will do this using pre save middleware
 	* TODO: learn about Promise.all(), etc
-	tourSchema.pre('save', async function(next) {
-		const guidesPromises = this.guides.map(async id => await User.findById(id))
+		tourSchema.pre('save', async function(next) {
+		const guidesPromises = this.guides.map(async id => User.findById(id))
 		this.guides = await Promise.all(guidesPromises)
 		next()
 	})
 	* Embedding, has its set of disadvantages here, eg. what if we update some details of the user(tour guide), then we will 
 	need to do update here also.
+
+# 151 Modelling Tour Guides: Child Referencing
+	guides: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: 'User'
+        }    
+	]
+
+#152 Populating Tour Guides
+	* Replace reference field ids, with actual data
+	* Result will look as if the data has always been embedded
+	* Use populate only when needed and keep only the required fields
 */
