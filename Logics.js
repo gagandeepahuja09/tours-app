@@ -598,4 +598,8 @@ Success / Fail(Client) / Error(Server)
 	* Replace reference field ids, with actual data
 	* Result will look as if the data has always been embedded
 	* Use populate only when needed and keep only the required fields
+
+#153 Modelling Review
+	* Schema: review, rating, createdAt, ref to tour, ref to user
+	* mongoose.Schema.ObjectId
 */
