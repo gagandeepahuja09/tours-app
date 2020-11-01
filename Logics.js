@@ -634,4 +634,24 @@ Success / Fail(Client) / Error(Server)
 		POST /tours/:tourId/reviews
 	* Get a specific review
 		GET /tours/:tourId/reviews/:reviewId
+
+#158 Nested Routes With Express
+	* Current implementation of POST /tours/:tourId/reviews can be a bit messy to understand, because
+	we are keeping the code of creating a review, inside our tourRoutes		
+	* Beside this being confusing, we also have duplicate code present(We would need to change at both places):
+		.get(reviewController.getAllReviews)
+		.post(
+			authController.protect,
+			authController.restrictTo('user'),
+			reviewController.createReview
+		)
+	* To handle this, we will use an express feature called, "Merge Params"
+	* So, instead of calling reviewController, in tourRouter, we will give a reference to the 
+	review router in tourRouter, whenever we encounter something like this:
+			router.use('/:tourId/reviews', reviewRouter)
+	* But, we also want the reviewRouter to enable access to the tourId
+	* For this, we need to set the mergeParams property to true in reviewRouter
+	* It is by default false, because each router by default has access to only parameters of their
+	specific routes
+	* const router = express.Router({ mergeParams: true }) in reviewRoutes 
 */
