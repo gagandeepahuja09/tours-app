@@ -604,5 +604,6 @@ Success / Fail(Client) / Error(Server)
 	* mongoose.Schema.ObjectId
 
 #154 Creating And Getting Reviews
-	* top-5-cheap is a great example of middlewares	
+	* top-5-cheap is a great example of middlewares
+	* Don't forget to protect the routes	
 */
