@@ -599,7 +599,10 @@ Success / Fail(Client) / Error(Server)
 	* Result will look as if the data has always been embedded
 	* Use populate only when needed and keep only the required fields
 
-#153 Modelling Review
+#153 Modelling Reviews: Parent Referencing
 	* Schema: review, rating, createdAt, ref to tour, ref to user
 	* mongoose.Schema.ObjectId
+
+#154 Creating And Getting Reviews
+	* top-5-cheap is a great example of middlewares	
 */
