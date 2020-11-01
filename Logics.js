@@ -653,5 +653,14 @@ Success / Fail(Client) / Error(Server)
 	* For this, we need to set the mergeParams property to true in reviewRouter
 	* It is by default false, because each router by default has access to only parameters of their
 	specific routes
-	* const router = express.Router({ mergeParams: true }) in reviewRoutes 
+	* const router = express.Router({ mergeParams: true }) in reviewRoutes
+
+#159 Adding A Nested GET Endpoint
+	* Just change the existing get all reviews, and accomodate it.
+
+#160 Building Handler Factory Functions: Delete
+	* Adding very similar handlers, to a lot of our controllers, will create a lot of duplicate code
+	* We will create a function, that will be used by all controllers for deleting
+	* In this we are using closures, which allows all inner functions access to outer variables, event
+	after they are returned.
 */

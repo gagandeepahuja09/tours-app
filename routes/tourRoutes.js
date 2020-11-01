@@ -33,13 +33,4 @@ router
     .patch(tourController.updateTour)
     .delete(authController.protect, authController.restrictTo('admin', 'lead-guide'), tourController.deleteTour)    
 
-// router
-//     .route('/:tourId/reviews')
-//     .get(reviewController.getAllReviews)
-//     .post(
-//         authController.protect,
-//         authController.restrictTo('user'),
-//         reviewController.createReview
-//     )
-
 module.exports = router
