@@ -605,5 +605,33 @@ Success / Fail(Client) / Error(Server)
 
 #154 Creating And Getting Reviews
 	* top-5-cheap is a great example of middlewares
-	* Don't forget to protect the routes	
+	* Don't forget to protect the routes
+	
+#155 Populating Reviews
+
+#156 Virtual Populate: Tours And Reviews
+	* When using parent referencing, we can get all user and tour information for a review.
+	* But how to do the opposite? i.e. get all reviews for a tour
+	* Mongoose has virtual populate feature for this 
+	* It's a bit like keeping the list of review ids for a tour, but w/o actually persisting it.
+	* Just like virtual fields
+	* In virtual populate, for example for tour --> reviews, we specify a virtual property and
+	the following:
+		* reference: Reviews
+		* localField: _id
+		* foreignField: tour
+	* Local and foreign fields for connecting them
+	* But now we don't want that reviews should display information related to tour, so lets
+		remove that from it's populate.
+
+#157 Implementing Simple Nested Routes
+	* The current implementation route for reviews is not ideal.
+	* Nested routes are ideal for parent-child relationships.
+	* Example: Tours is a parent of reviews
+	* Get a list of reviews for a particular tour
+		GET /tours/:tourId/reviews
+	* Create a review for a particular tour
+		POST /tours/:tourId/reviews
+	* Get a specific review
+		GET /tours/:tourId/reviews/:reviewId
 */
